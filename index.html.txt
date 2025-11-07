@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ★★★ PERSONALIZATION ★★★ -->
+    <!-- Replace "Bestie's Name" with your friend's actual name -->
+    <title>Happy Birthday, [Bestie's Name]!</title>
+
+    <!-- ★★★ STYLES START HERE ★★★ -->
+    <style>
+        /* --- Core Design System & Global Styles --- */
+
+        /* 1. Font Imports */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Dancing+Script:wght@700&display=swap');
+
+        /* 2. CSS Variables (The "Theme") */
+        :root {
+            --primary-dark: #1a1a1a;
+            --secondary-dark: #2c2c2c;
+            --accent-color: #ff69b4; /* Hot Pink - vibrant and celebratory */
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --font-main: 'Montserrat', sans-serif;
+            --font-cursive: 'Dancing Script', cursive;
+        }
+
+        /* 3. Global Reset & Body Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* 4. Background Starfield Animation */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary-dark);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+
+        /* --- Reusable Components & Effects --- */
+
+        /* 1. Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* 2. Section Styling */
+        .journey-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5rem 2rem;
+            position: relative;
+            text-align: center;
+            opacity: 0; /* Initially hidden for scroll animation */
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        /* Scroll Animation Trigger Class */
+        .journey-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* --- Typography & Content Styles --- */
+
+        h1, h2, h3 {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        h1 {
+            font-family: var(--font-cursive);
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--accent-color);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cursive-highlight {
+            font-family: var(--font-cursive);
+            color: var(--accent-color);
+            font-size: 1.5em;
+        }
+
+        /* --- Specific Section Styles --- */
+
+        /* 1. Landing Section */
+        #landing h1 {
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        #landing p {
+            animation: fadeIn 2s 1s ease-in-out both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* 2. Memories Section - Timeline Style */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-color);
+            opacity: 0.3;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 1rem 2rem;
+            position: relative;
+            width: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            padding-right: 4rem;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 4rem;
+            text-align: left;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-dark);
+            border: 4px solid var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+        .timeline-content p {
+           margin-bottom: 0;
+        }
+
+        /* 3. Gallery Section */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .photo-item {
+            overflow: hidden;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: scale(1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        /* --- Final Wish & Interactive Button --- */
+        #final-wish .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .confetti-button {
+            font-family: var(--font-main);
+            background: var(--accent-color);
+            color: var(--primary-dark);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .confetti-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .confetti-button:active {
+            transform: translateY(-2px);
+        }
+        
+        #final-message {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            height: 0;
+            overflow: hidden;
+        }
+
+        #final-message.visible {
+            opacity: 1;
+            height: auto;
+        }
+        
+        /* Canvas for confetti */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                left: 0;
+                padding-left: 70px;
+                padding-right: 1rem;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(odd)::after,
+            .timeline-item:nth-child(even)::after {
+                left: 20px;
+            }
+        }
+
+    </style>
+    <!-- ★★★ STYLES END HERE ★★★ -->
+</head>
+<body>
+
+    <!-- Static background, always visible -->
+    <div class="starfield" id="starfield-bg"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+    <!-- ★★★ PERSONALIZATION STARTS HERE ★★★ -->
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+
+
+    <!-- SECTION 1: LANDING -->
+    <section id="landing" class="journey-section is-visible">
+        <div class="container">
+            <!-- Edit the name below -->
+            <h1>Happy Birthday,<br>[Bestie's Name]!</h1>
+            <!-- Edit the introductory message -->
+            <p>Today is all about celebrating you. Get ready for a little trip down memory lane, because a friend like you deserves the world.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 2: THE JOURNEY BEGINS -->
+    <section id="intro" class="journey-section">
+        <div class="container glass-card">
+            <h2>Our Story</h2>
+            <!-- Describe how your friendship started or what it means to you -->
+            <p>Remember when we first met at [Place/Event]? I had no idea then that I was meeting one of the most important people in my life. From that day on, life just got a whole lot brighter.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: CHERISHED MEMORIES (TIMELINE) -->
+    <section id="memories" class="journey-section">
+        <div class="container">
+            <h2>A Few of My Favorite Memories</h2>
+            <div class="timeline">
+                <!-- Add 3-5 of your favorite memories. Edit the title and the paragraph for each. -->
+                
+                <!-- MEMORY 1 -->
+                <div class="timeline-item glass-card">
+                    <div class="timeline-content">
+                        <h3>That Time We [Briefly Describe Memory]</h3>
+                        <p>I'll never forget us laughing so hard we couldn't breathe because of [mention a funny detail or inside joke]. It's a small moment, but it means so much.</p>
+                    </div>
+                </div>
+
+                <!-- MEMORY 2 -->
+                <div class="timeline-item glass-card">
+                    <div class="timeline-content">
+                        <h3>The [Event/Trip Name] Adventure</h3>
+                        <p>From navigating [a city] to trying [a food or activity], that trip was epic. My favorite part was when we [mention a specific highlight].</p>
+                    </div>
+                </div>
+
+                <!-- MEMORY 3 -->
+                <div class="timeline-item glass-card">
+                    <div class="timeline-content">
+                        <h3>Always Being There</h3>
+                        <p>I was going through [a tough time] and you were the one who [did something supportive]. It showed me what a truly incredible friend you are.</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- SECTION 4: WHY YOU'RE AMAZING -->
+    <section id="qualities" class="journey-section">
+        <div class="container glass-card">
+            <h2>Why You're the Best</h2>
+            <!-- List a few qualities you admire in your friend -->
+            <p>It’s not just the memories, it’s who you are. Your <span class="cursive-highlight">kindness</span> is inspiring, your <span class="cursive-highlight">strength</span> is incredible, and your <span class="cursive-highlight">sense of humor</span> can make any day better. Never change.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PHOTO GALLERY -->
+    <section id="gallery" class="journey-section">
+        <div class="container">
+            <h2>Our Gallery of Good Times</h2>
+            <p>A few snapshots from our journey together.</p>
+            <div class="photo-grid">
+                <!-- 
+                    ★★ IMPORTANT PHOTO INSTRUCTIONS ★★
+                    To add your photos, you can either:
+                    1. (EASIEST) Upload your images to a free hosting service like imgbb.com and paste the direct image link into the `src` attribute.
+                    2. (OFFLINE) Convert your images to Base64 strings and paste the entire string into the `src`. You can use a free online converter for this.
+                    
+                    Replace the placeholder URLs below with your image links. Use photos with different dimensions for a better effect.
+                -->
+                <div class="photo-item"><img src="https://via.placeholder.com/400x500.png?text=Our+Funny+Selfie" alt="A memorable photo with your friend"></div>
+                <div class="photo-item"><img src="https://via.placeholder.com/400x300.png?text=Vacation+Vibes" alt="A memorable photo with your friend"></div>
+                <div class="photo-item"><img src="https://via.placeholder.com/400x400.png?text=Celebrating+Something" alt="A memorable photo with your friend"></div>
+                <div class="photo-item"><img src="https://via.placeholder.com/400x600.png?text=Candid+Moment" alt="A memorable photo with your friend"></div>
+                <div class="photo-item"><img src="https://via.placeholder.com/400x400.png?text=Throwback+Pic" alt="A memorable photo with your friend"></div>
+                <div class="photo-item"><img src="https://via.placeholder.com/400x300.png?text=Just+Chilling" alt="A memorable photo with your friend"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- SECTION 6: FINAL BIRTHDAY WISH -->
+    <section id="final-wish" class="journey-section">
+        <div class="container glass-card">
+            <h2>My Wish For You</h2>
+            <!-- Your final, heartfelt birthday wish -->
+            <p>As you celebrate another year, I hope you feel all the love and happiness you bring to everyone around you. May this next chapter be your best one yet, filled with adventure, success, and endless joy.</p>
+            <button id="confetti-button" class="confetti-button">Click for one last thing...</button>
+            <!-- The message that appears after the button click -->
+            <p id="final-message">I'm so incredibly lucky to have you in my life. Happy Birthday, my dear friend!</p>
+        </div>
+    </section>
+
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+    <!-- ★★★  PERSONALIZATION ENDS HERE  ★★★ -->
+    <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★ -->
+
+
+
+    <!-- ★★★ JAVASCRIPT LOGIC STARTS HERE ★★★ -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // --- 1. Starfield Background Generation ---
+        const starfield = document.getElementById('starfield-bg');
+        const numStars = 150;
+
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            star.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            starfield.appendChild(star);
+        }
+
+        // --- 2. Scroll-based Fade-in Animations ---
+        const sections = document.querySelectorAll('.journey-section');
+
+        const observerOptions = {
+            root: null, // observes intersections relative to the viewport
+            rootMargin: '0px',
+            threshold: 0.2 // trigger when 20% of the element is visible
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Optional: unobserve after it has been animated
+                    // observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+
+        // --- 3. Confetti Finale ---
+        const confettiButton = document.getElementById('confetti-button');
+        const finalMessage = document.getElementById('final-message');
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let confettiParticles = [];
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        const confettiColors = ['#ff69b4', '#ffda00', '#00eaff', '#ff0a54', '#f0f0f0'];
+
+        function ConfettiParticle() {
+            this.x = Math.random() * canvas.width;
+            this.y = -20;
+            this.size = Math.random() * 10 + 5;
+            this.weight = Math.random() * 2 + 1;
+            this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            this.rotation = Math.random() * 360;
+            this.rotationSpeed = Math.random() * 2 - 1;
+        }
+
+        ConfettiParticle.prototype.update = function() {
+            this.y += this.weight;
+            this.x += Math.sin(this.y * 0.05) * 2;
+            this.rotation += this.rotationSpeed;
+            if (this.y > canvas.height + 20) {
+                // Reset particle
+                this.y = -20;
+                this.x = Math.random() * canvas.width;
+            }
+        };
+
+        ConfettiParticle.prototype.draw = function() {
+            ctx.save();
+            ctx.translate(this.x + this.size / 2, this.y + this.size / 2);
+            ctx.rotate(this.rotation * Math.PI / 180);
+            ctx.fillStyle = this.color;
+            ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+            ctx.restore();
+        };
+
+        function startConfetti() {
+            confettiParticles = [];
+            for (let i = 0; i < 200; i++) {
+                confettiParticles.push(new ConfettiParticle());
+            }
+            animateConfetti();
+        }
+        
+        let animationFrameId;
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            confettiParticles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            animationFrameId = requestAnimationFrame(animateConfetti);
+        }
+        
+        function stopConfetti() {
+            cancelAnimationFrame(animationFrameId);
+             // Smoothly fade out remaining confetti
+            let fadeOut = setInterval(() => {
+                ctx.fillStyle = 'rgba(26, 26, 26, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                if (ctx.globalAlpha <= 0.1) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    clearInterval(fadeOut);
+                }
+            }, 50);
+        }
+
+        confettiButton.addEventListener('click', () => {
+            confettiButton.style.display = 'none'; // Hide the button
+            finalMessage.classList.add('visible'); // Show the final message
+            
+            startConfetti();
+
+            // Stop the confetti after a few seconds
+            setTimeout(() => {
+                stopConfetti();
+            }, 6000); // 6 seconds
+        });
+
+    });
+    </script>
+    <!-- ★★★ JAVASCRIPT LOGIC ENDS HERE ★★★ -->
+</body>
+</html>
